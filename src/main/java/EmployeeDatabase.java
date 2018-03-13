@@ -15,7 +15,7 @@ public class EmployeeDatabase {
     /**
      * List of employees.
      */
-    public List<Employee> employees;
+    private List<Employee> employees;
 
     /**
      * Constructor which initializes the employees list.
@@ -30,10 +30,10 @@ public class EmployeeDatabase {
     /**
      * Returns the manager for the given employee.
      *
-     * @param employee
-     * @return
+     * @param employee the employee.
+     * @return the employee's manager.
      */
-    Employee findManager(final Employee employee) {
+    public Employee findManager(final Employee employee) {
         Employee manager = null;
         for (int i = 0; i < employees.size(); i++) {
             if (employees.get(i).getName() == employee.getManager()) {
@@ -56,6 +56,16 @@ public class EmployeeDatabase {
         /*
          * Implement this function
          */
+        if (employee.getManager() == "") {
+            return 0;
+        }
+        int i = 0;
+        for (Employee person : employees) {
+            if (employee.getManager() == person.getName()) {
+                i += 1 + countManagersAbove(person);
+            }
+        }
+        return i;
     }
 
     /**
@@ -70,6 +80,13 @@ public class EmployeeDatabase {
         /*
          * Implement this function
          */
+        int count = 0;
+        for (Employee person : employees) {
+            if (employee.getName() == person.getManager()) {
+                count += 1 + countEmployeesUnder(person);
+            }
+        }
+        return count;
     }
 
     /**
